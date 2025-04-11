@@ -36,9 +36,7 @@ public class CustomerService {
     }
 
     public CustomerInfoResponse login(LoginRequest request) {
-        System.out.println("Login request: " + request);
         Customer customer = customerRepository.findByEmail(request.getEmail());
-        System.out.println("Customer: " + customer);
         if (customer == null) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Email does not exist"
@@ -49,15 +47,16 @@ public class CustomerService {
                     HttpStatus.UNAUTHORIZED, "Invalid password"
             );
         }
-        CustomerInfoResponse response = new CustomerInfoResponse();
-        response.setId(customer.getId());
-        response.setFirstName(customer.getFirstName());
-        response.setLastName(customer.getLastName());
-        response.setEmail(customer.getEmail());
-        response.setAddresses(customer.getAddress());
-        response.setPhone(customer.getPhone());
-        return response;
+        return new CustomerInfoResponse(customer);
     }
 
-
+    public CustomerInfoResponse findUserById(String id) {
+        Customer customer = customerRepository.findById(id);
+        if (customer == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Customer not found"
+            );
+        }
+        return new CustomerInfoResponse(customer);
+    }
 }

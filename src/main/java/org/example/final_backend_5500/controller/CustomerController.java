@@ -19,6 +19,7 @@ public class CustomerController {
 
     @PostMapping("/signup")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        System.out.println("Creating customer: " + customer);
         Customer createdCustomer = customerService.createCustomer(customer);
         return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }

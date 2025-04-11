@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService {
 
@@ -20,7 +22,7 @@ public class CustomerService {
     }
 
 //User Signup
-    public Customer createCustomer(Customer customer) {
+    public CustomerInfoResponse createCustomer(Customer customer) {
         if (customerRepository.existsByEmail(customer.getEmail())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Email is already in use"
@@ -32,17 +34,18 @@ public class CustomerService {
             );
         }
 
-        return customerRepository.save(customer);
+        Customer createdCustomer = customerRepository.save(customer);
+        return new CustomerInfoResponse(createdCustomer);
     }
 
-    public CustomerInfoResponse login(LoginRequest request) {
-        Customer customer = customerRepository.findByEmail(request.getEmail());
+    public CustomerInfoResponse login(String email, String password) {
+        Customer customer = customerRepository.findByEmail(email);
         if (customer == null) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Email does not exist"
             );
         }
-        if (!customer.getPassword().equals(request.getPassword())) {
+        if (!customer.getPassword().equals(password)) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Invalid password"
             );
@@ -51,12 +54,10 @@ public class CustomerService {
     }
 
     public CustomerInfoResponse findUserById(String id) {
-        Customer customer = customerRepository.findById(id);
-        if (customer == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Customer not found"
-            );
-        }
-        return new CustomerInfoResponse(customer);
+        return customerRepository.findById(id)
+                .map(CustomerInfoResponse::new)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Customer not found"
+                ));
     }
 }

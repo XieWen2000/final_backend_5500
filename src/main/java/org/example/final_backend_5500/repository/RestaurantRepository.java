@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RestaurantRepository extends MongoRepository<Restaurant, String> {
     List<Restaurant> findByName(String name);
-    List<Restaurant> findByAdminUsername(String adminUsername);
+    Restaurant findByAdminUsername(String adminUsername);  // Admin user name needs to be unique
+    boolean existsByAdminUsername(String adminUsername);
 }

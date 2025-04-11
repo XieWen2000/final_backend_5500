@@ -18,15 +18,14 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        System.out.println("Creating customer: " + customer);
-        Customer createdCustomer = customerService.createCustomer(customer);
+    public ResponseEntity<CustomerInfoResponse> createCustomer(@RequestBody Customer customer) {
+        CustomerInfoResponse createdCustomer = customerService.createCustomer(customer);
         return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<CustomerInfoResponse> loginCustomer(@RequestBody LoginRequest loginRequest) {
-        CustomerInfoResponse customer = customerService.login(loginRequest);
+        CustomerInfoResponse customer = customerService.login(loginRequest.getEmail(), loginRequest.getPassword());
         return ResponseEntity.ok(customer);
     }
 

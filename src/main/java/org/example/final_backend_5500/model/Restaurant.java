@@ -15,8 +15,11 @@ import java.util.List;
 public class Restaurant {
     @Id
     private Long restaurantId;
+
     private String name;
     private String address;
     private List<Dish> dishes;
     private String imageUrl;
+    private String adminUsername;
+    private String adminPassword;
 }

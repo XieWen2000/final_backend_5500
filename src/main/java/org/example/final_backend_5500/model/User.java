@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public abstract class User {
     @Id
-    private Long userId;
+    private String id;
 
-    private String username;
+    private String email;
+    private String firstName;
+    private String lastName;
     private String password;
     private String phone;
-    private String email;
 }

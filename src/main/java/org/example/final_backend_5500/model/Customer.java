@@ -13,6 +13,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @Builder
 public class Customer extends User {
-    private Optional<String> address;
-    private Optional<List<PaymentInfo>> paymentInfo;
+    private String address;
+    private List<PaymentInfo> paymentInfo;
 }

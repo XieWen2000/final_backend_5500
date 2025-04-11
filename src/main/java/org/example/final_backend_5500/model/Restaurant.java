@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class Restaurant {
     @Id
-    private Long restaurantId;
+    private Long id;
 
     private String name;
     private String address;

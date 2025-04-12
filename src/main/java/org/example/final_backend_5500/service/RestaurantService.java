@@ -42,7 +42,7 @@ public class RestaurantService {
                     HttpStatus.UNAUTHORIZED, "Admin username does not exist"
             );
         }
-        if (!restaurant.getAdminPassword().equals(password)) {
+        if (!restaurant.getPassword().equals(password)) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Invalid password"
             );

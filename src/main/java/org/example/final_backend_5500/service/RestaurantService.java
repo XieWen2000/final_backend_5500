@@ -20,9 +20,14 @@ public class RestaurantService {
 
     // Restaurant Signup
     public RestaurantInfoResponse createRestaurant(Restaurant restaurant) {
-        if (restaurantRepository.existsByAdminUsername(restaurant.getAdminUsername())) {
+        if (restaurantRepository.existsByEmail(restaurant.getEmail())) {
             throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Admin username already exists"
+                    HttpStatus.UNAUTHORIZED, "Email already exists"
+            );
+        }
+        if (restaurantRepository.existsByPhone(restaurant.getPhone())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Phone number already exists"
             );
         }
         Restaurant createdRestaurant = restaurantRepository.save(restaurant);
@@ -30,8 +35,8 @@ public class RestaurantService {
     }
 
     // Restaurant Admin Login
-    public RestaurantInfoResponse login(String adminUsername, String password) {
-        Restaurant restaurant = restaurantRepository.findByAdminUsername(adminUsername);
+    public RestaurantInfoResponse login(String email, String password) {
+        Restaurant restaurant = restaurantRepository.findByEmail(email);
         if (restaurant == null) {
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED, "Admin username does not exist"

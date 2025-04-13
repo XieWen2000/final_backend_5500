@@ -23,7 +23,7 @@ public class RestaurantController {
 
     @PostMapping("/login")
     public ResponseEntity<RestaurantInfoResponse> loginRestaurant(@RequestBody Restaurant restaurant) {
-        RestaurantInfoResponse restaurantInfo = restaurantService.login(restaurant.getAdminUsername(), restaurant.getAdminPassword());
+        RestaurantInfoResponse restaurantInfo = restaurantService.login(restaurant.getEmail(), restaurant.getPassword());
         return ResponseEntity.ok(restaurantInfo);
     }
 

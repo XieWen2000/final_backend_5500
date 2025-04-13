@@ -33,5 +33,12 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<RestaurantInfoResponse> updateRestaurant(@PathVariable String id, @RequestBody Restaurant updatedData) {
+        RestaurantInfoResponse updatedRestaurant = restaurantService.updateRestaurantAccountInfo(id, updatedData);
+        return ResponseEntity.ok(updatedRestaurant);
+    }
+
+
 }
 

@@ -13,6 +13,7 @@ public class RestaurantInfoResponse {
     private String address;
     private List<Dish> dishes;
     private String imageUrl;
+    private String logoUrl;
     private String email;
     private String phone;
 
@@ -24,6 +25,7 @@ public class RestaurantInfoResponse {
         this.imageUrl = restaurant.getImageUrl();
         this.email = restaurant.getEmail();
         this.phone = restaurant.getPhone();
+        this.logoUrl = restaurant.getLogoUrl();
     }
 }
 

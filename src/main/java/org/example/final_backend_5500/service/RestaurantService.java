@@ -39,7 +39,7 @@ public class RestaurantService {
         Restaurant restaurant = restaurantRepository.findByEmail(email);
         if (restaurant == null) {
             throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Admin username does not exist"
+                    HttpStatus.UNAUTHORIZED, "Admin email does not exist"
             );
         }
         if (!restaurant.getPassword().equals(password)) {
@@ -57,5 +57,32 @@ public class RestaurantService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Restaurant not found"
                 ));
+    }
+
+    public RestaurantInfoResponse updateRestaurantAccountInfo(String id, Restaurant updatedData) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Restaurant not found"
+                ));
+        if (updatedData.getName() != null) {
+            restaurant.setName(updatedData.getName());
+        }
+        if (updatedData.getAddress() != null) {
+            restaurant.setAddress(updatedData.getAddress());
+        }
+        if (updatedData.getPhone() != null) {
+            restaurant.setPhone(updatedData.getPhone());
+        }
+        if (updatedData.getEmail() != null) {
+            restaurant.setEmail(updatedData.getEmail());
+        }
+        if (updatedData.getImageUrl() != null) {
+            restaurant.setImageUrl(updatedData.getImageUrl());
+        }
+        if (updatedData.getLogoUrl() != null) {
+            restaurant.setLogoUrl(updatedData.getLogoUrl());
+        }
+        Restaurant updatedRestaurant = restaurantRepository.save(restaurant);
+        return new RestaurantInfoResponse(updatedRestaurant);
     }
 }

@@ -20,6 +20,7 @@ public class Restaurant {
     private String address;
     private List<Dish> dishes;
     private String imageUrl;
+    private String logoUrl;
     private String email;
     private String phone;
     private String password;

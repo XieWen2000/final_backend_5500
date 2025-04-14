@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class Order {
     @Id
-    private Long id;
+    private String orderId;
 
     private String customerId;
     private String restaurantId;

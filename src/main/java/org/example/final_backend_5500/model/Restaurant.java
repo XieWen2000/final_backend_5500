@@ -18,7 +18,6 @@ public class Restaurant {
 
     private String name;
     private String address;
-    private List<Dish> dishes;
     private String imageUrl;
     private String logoUrl;
     private String email;

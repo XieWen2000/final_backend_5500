@@ -9,6 +9,6 @@ public interface DishService {
     Dish getDishByName(String name);
     List<Dish> getAllDishes();
     List<Dish> getDishesByRestaurantId(String restaurantId);
-    Dish updateDish(String id, Dish dish);
+    Dish updateDish(String id, Dish updatedDish);
     void deleteDish(String id);
 }

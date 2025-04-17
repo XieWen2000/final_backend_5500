@@ -3,7 +3,9 @@ package org.example.final_backend_5500.service;
 import org.example.final_backend_5500.model.Dish;
 import org.example.final_backend_5500.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -39,8 +41,23 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Dish updateDish(String id, Dish dish) {
-        dish.setDishId(id);
+    public Dish updateDish(String id, Dish updatedDish) {
+        Dish dish = dishRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Dish not found"
+                ));
+        if (updatedDish.getName() != null) {
+            dish.setName(updatedDish.getName());
+        }
+        if (updatedDish.getDescription() != null) {
+            dish.setDescription(updatedDish.getDescription());
+        }
+        if (updatedDish.getPrice() != null) {
+            dish.setPrice(updatedDish.getPrice());
+        }
+        if (updatedDish.getImageUrl() != null) {
+            dish.setImageUrl(updatedDish.getImageUrl());
+        }
         return dishRepository.save(dish);
     }
 

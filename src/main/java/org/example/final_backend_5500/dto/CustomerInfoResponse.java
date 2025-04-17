@@ -15,7 +15,7 @@ public class CustomerInfoResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private String addresses;
+    private String address;
     private String phone;
     private List<PaymentInfo> paymentInfo;
 
@@ -24,7 +24,7 @@ public class CustomerInfoResponse {
         this.firstName = customer.getFirstName();
         this.lastName = customer.getLastName();
         this.email = customer.getEmail();
-        this.addresses = customer.getAddress();
+        this.address = customer.getAddress();
         this.phone = customer.getPhone();
         this.paymentInfo = customer.getPaymentInfo();
     }

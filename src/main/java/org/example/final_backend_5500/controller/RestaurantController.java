@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/restaurants")
 @RequiredArgsConstructor
@@ -37,6 +39,15 @@ public class RestaurantController {
     public ResponseEntity<RestaurantInfoResponse> updateRestaurant(@PathVariable String id, @RequestBody Restaurant updatedData) {
         RestaurantInfoResponse updatedRestaurant = restaurantService.updateRestaurantAccountInfo(id, updatedData);
         return ResponseEntity.ok(updatedRestaurant);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RestaurantInfoResponse>> getAllRestaurants() {
+        List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+        List<RestaurantInfoResponse> restaurantInfoResponses = restaurants.stream()
+                .map(RestaurantInfoResponse::new)
+                .toList();
+        return ResponseEntity.ok(restaurantInfoResponses);
     }
 
 

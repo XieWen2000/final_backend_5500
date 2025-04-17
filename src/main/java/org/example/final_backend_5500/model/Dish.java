@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Dish {
     @Id
-    private String dishId;
+    private String id;
     private String name;
     private Double price;
     private String description;

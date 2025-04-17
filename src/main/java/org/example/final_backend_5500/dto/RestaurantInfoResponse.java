@@ -11,21 +11,23 @@ public class RestaurantInfoResponse {
     private String id;
     private String name;
     private String address;
-    private List<Dish> dishes;
     private String imageUrl;
     private String logoUrl;
     private String email;
     private String phone;
+    private Double rating;
+    private Integer numberOfRatings;
 
     public RestaurantInfoResponse(Restaurant restaurant) {
         this.id = restaurant.getId();
         this.name = restaurant.getName();
         this.address = restaurant.getAddress();
-        this.dishes = restaurant.getDishes();
         this.imageUrl = restaurant.getImageUrl();
         this.email = restaurant.getEmail();
         this.phone = restaurant.getPhone();
         this.logoUrl = restaurant.getLogoUrl();
+        this.rating = restaurant.getRating();
+        this.numberOfRatings = restaurant.getNumberOfRatings();
     }
 }
 

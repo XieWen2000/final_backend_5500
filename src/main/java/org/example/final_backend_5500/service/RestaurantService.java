@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class RestaurantService {
 
@@ -30,6 +32,8 @@ public class RestaurantService {
                     HttpStatus.UNAUTHORIZED, "Phone number already exists"
             );
         }
+        restaurant.setNumberOfRatings(0);
+        restaurant.setRating(0.0);
         Restaurant createdRestaurant = restaurantRepository.save(restaurant);
         return new RestaurantInfoResponse(createdRestaurant);
     }
@@ -84,5 +88,9 @@ public class RestaurantService {
         }
         Restaurant updatedRestaurant = restaurantRepository.save(restaurant);
         return new RestaurantInfoResponse(updatedRestaurant);
+    }
+
+    public List<Restaurant> getAllRestaurants() {
+        return restaurantRepository.findAll();
     }
 }

@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.final_backend_5500.model.Order;
 import org.example.final_backend_5500.model.OrderStatus;
 import org.example.final_backend_5500.repository.OrderRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
+        order.setOrderTime(new Date());
         return orderRepository.save(order);
     }
 
@@ -41,8 +45,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrder(String orderId, Order order) {
-        order.setOrderId(orderId);
+    public Order updateOrderStatus(String orderId, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Order not found"
+                ));
+        order.setStatus(status);
         return orderRepository.save(order);
     }
 

@@ -16,14 +16,16 @@ import java.util.List;
 @Builder
 public class Order {
     @Id
-    private String orderId;
+    private String id;
 
     private String customerId;
     private String restaurantId;
-
+    private String deliveryAddress;
+    private String restaurantAddress;
+    private String dasherId;
     private Date orderTime;
     private OrderStatus status;
 
     private List<OrderItem> items;
-    private Payment payment;
+    private PaymentInfo payment;
 }

@@ -58,4 +58,9 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(String orderId) {
         orderRepository.deleteById(orderId);
     }
+
+    @Override
+    public List<Order> getOrdersByCustomerIdAndStatus(String customerId, OrderStatus status) {
+        return orderRepository.findByCustomerIdAndStatus(customerId, status);
+    }
 }

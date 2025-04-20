@@ -60,4 +60,10 @@ public class OrderController {
         Order updatedOrder = orderService.updateOrderStatus(id, status);
         return ResponseEntity.ok(updatedOrder);
     }
+
+    @GetMapping("/customer/{customerId}/status/{status}")
+    public ResponseEntity<List<Order>> getOrdersByCustomerIdAndStatus(@PathVariable String customerId, @PathVariable OrderStatus status) {
+        List<Order> orders = orderService.getOrdersByCustomerIdAndStatus(customerId, status);
+        return ResponseEntity.ok(orders);
+    }
 }

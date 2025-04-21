@@ -19,12 +19,18 @@ public class Order {
     private String id;
 
     private String customerId;
-    private String restaurantId;
     private String deliveryAddress;
+
+    private String restaurantId;
+    private String restaurantName;
     private String restaurantAddress;
+
     private String dasherId;
+    private String dasherName;
+
     private Date orderTime;
     private OrderStatus status;
+    private Double totalPrice;
 
     private List<OrderItem> items;
     private PaymentInfo payment;

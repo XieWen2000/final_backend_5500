@@ -1,6 +1,7 @@
 package org.example.final_backend_5500.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.final_backend_5500.dto.RestaurantOrderStatusUpdateRequest;
 import org.example.final_backend_5500.model.Order;
 import org.example.final_backend_5500.model.OrderStatus;
 import org.example.final_backend_5500.service.OrderService;
@@ -48,6 +49,18 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("/restaurant/{restaurantId}/active")
+    public ResponseEntity<List<Order>> getRestaurantActiveOrders(@PathVariable String restaurantId) {
+        List<Order> orders = orderService.getRestaurantActiveOrders(restaurantId);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/restaurant/{restaurantId}/completed")
+    public ResponseEntity<List<Order>> getRestaurantCompletedOrders(@PathVariable String restaurantId) {
+        List<Order> orders = orderService.getRestaurantCompletedOrders(restaurantId);
+        return ResponseEntity.ok(orders);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
@@ -55,9 +68,9 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/status/{id}")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable String id, @RequestBody OrderStatus status) {
-        Order updatedOrder = orderService.updateOrderStatus(id, status);
+    @PutMapping("/status/restaurant/{id}")
+    public ResponseEntity<Order> restaurantUpdateOrderStatus(@PathVariable String id, @RequestBody RestaurantOrderStatusUpdateRequest request) {
+        Order updatedOrder = orderService.restaurantUpdateOrderStatus(id, request.getStatus(), request.getRestaurantId());
         return ResponseEntity.ok(updatedOrder);
     }
 

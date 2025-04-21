@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderItem {
     private String dishId;
+    private String dishName;
     private int quantity;
 }

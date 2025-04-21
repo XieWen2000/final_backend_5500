@@ -11,8 +11,9 @@ public interface OrderService {
     List<Order> getOrdersByStatus(OrderStatus status);
     List<Order> getOrdersByCustomerId(String customerId);
     List<Order> getOrdersByRestaurantId(String restaurantId);
-    Order updateOrderStatus(String orderId, OrderStatus status);
     void deleteOrder(String OrderId);
     List<Order> getOrdersByCustomerIdAndStatus(String customerId, OrderStatus status);
-
+    List<Order> getRestaurantActiveOrders(String restaurantId);
+    List<Order> getRestaurantCompletedOrders(String restaurantId);
+    Order restaurantUpdateOrderStatus(String orderId, OrderStatus status, String restaurantId);
 }

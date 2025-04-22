@@ -117,7 +117,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUnassignedOrder() {
-        return orderRepository.findByDasherId(null);
+        List<OrderStatus> statuses = List.of(OrderStatus.READY);
+        return orderRepository.findByDasherIdAndStatusIn(null, statuses);
     }
 
     @Override
@@ -131,7 +132,9 @@ public class OrderServiceImpl implements OrderService {
                     HttpStatus.BAD_REQUEST, "Order already has a dasher assigned"
             );
         }
-        if (orderRepository.existsByDasherId(dasherId)) {
+        List<OrderStatus> statuses = List.of(OrderStatus.ON_THE_WAY, OrderStatus.READY);
+        List<Order> existingOrders = orderRepository.findByDasherIdAndStatusIn(dasherId, statuses);
+        if (!existingOrders.isEmpty()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Dasher already has an order assigned"
             );

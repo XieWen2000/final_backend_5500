@@ -55,4 +55,24 @@ public class DasherService {
                 ));
         return new DasherInfoResponse(dasher);
     }
+
+    public DasherInfoResponse updateDasher(String id, Dasher updatedDasher) {
+        Dasher dasher = dasherRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Dasher not found"
+                ));
+        if (updatedDasher.getFirstName() != null) {
+            dasher.setFirstName(updatedDasher.getFirstName());
+        }
+        if (updatedDasher.getLastName() != null) {
+            dasher.setLastName(updatedDasher.getLastName());
+        }
+        if (updatedDasher.getEmail() != null) {
+            dasher.setEmail(updatedDasher.getEmail());
+        }
+        if (updatedDasher.getPhone() != null) {
+            dasher.setPhone(updatedDasher.getPhone());
+        }
+        return new DasherInfoResponse(dasherRepository.save(dasher));
+    }
 }

@@ -98,5 +98,69 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+    @Override
+    public Order dasherUpdateOrderStatus(String orderId, OrderStatus status, String dasherId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Order not found"
+                ));
+        Set<OrderStatus> allowedStatuses = Set.of(OrderStatus.ON_THE_WAY, OrderStatus.DELIVERED, OrderStatus.CANCELLED);
+
+        if (!Objects.equals(order.getDasherId(), dasherId) || !allowedStatuses.contains(status)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "You are not authorized to update this order"
+            );
+        }
+        order.setStatus(status);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getUnassignedOrder() {
+        return orderRepository.findByDasherId(null);
+    }
+
+    @Override
+    public Order assignDasherToOrder(String orderId, String dasherId, String dasherName) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Order not found"
+                ));
+        if (order.getDasherId() != null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Order already has a dasher assigned"
+            );
+        }
+        if (orderRepository.existsByDasherId(dasherId)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Dasher already has an order assigned"
+            );
+        }
+        order.setDasherId(dasherId);
+        order.setDasherName(dasherName);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getOrdersByDasherId(String dasherId) {
+        return orderRepository.findByDasherId(dasherId);
+    }
+
+    @Override
+    public Order getActiveOrderByDasherId(String dasherId) {
+        List<OrderStatus> statuses = List.of(OrderStatus.ON_THE_WAY, OrderStatus.READY);
+        List<Order> foundOrder = orderRepository.findByDasherIdAndStatusIn(dasherId, statuses);
+        if (foundOrder.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No active order found for this dasher"
+            );
+        }
+        if (foundOrder.size() > 1) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Multiple active orders found for this dasher"
+            );
+        }
+        return foundOrder.get(0);
+    }
 }
 

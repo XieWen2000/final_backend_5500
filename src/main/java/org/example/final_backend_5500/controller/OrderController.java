@@ -1,9 +1,13 @@
 package org.example.final_backend_5500.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.final_backend_5500.dto.DasherInfoResponse;
+import org.example.final_backend_5500.dto.DasherOrderStatusUpdateRequest;
 import org.example.final_backend_5500.dto.RestaurantOrderStatusUpdateRequest;
+import org.example.final_backend_5500.model.Dasher;
 import org.example.final_backend_5500.model.Order;
 import org.example.final_backend_5500.model.OrderStatus;
+import org.example.final_backend_5500.service.DasherService;
 import org.example.final_backend_5500.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final DasherService dasherService;
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
@@ -78,5 +83,36 @@ public class OrderController {
     public ResponseEntity<List<Order>> getOrdersByCustomerIdAndStatus(@PathVariable String customerId, @PathVariable OrderStatus status) {
         List<Order> orders = orderService.getOrdersByCustomerIdAndStatus(customerId, status);
         return ResponseEntity.ok(orders);
+    }
+
+    @PutMapping("/status/dasher/{id}")
+    public ResponseEntity<Order> dasherUpdateOrderStatus(@PathVariable String id, @RequestBody DasherOrderStatusUpdateRequest request) {
+        Order updatedOrder = orderService.dasherUpdateOrderStatus(id, request.getStatus(), request.getDasherId());
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @GetMapping("/unassigned")
+    public ResponseEntity<List<Order>> getUnassignedOrder() {
+        List<Order> orders = orderService.getUnassignedOrder();
+        return ResponseEntity.ok(orders);
+    }
+
+    @PutMapping("/assignDasher/{orderId}")
+    public ResponseEntity<Order> assignDasherToOrder(@PathVariable String orderId, @RequestBody String dasherId) {
+        DasherInfoResponse dasher = dasherService.getDasherById(dasherId);
+        Order updatedOrder = orderService.assignDasherToOrder(orderId, dasherId, dasher.getFirstName() + " " + dasher.getLastName());
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @GetMapping("/dasher/{dasherId}")
+    public ResponseEntity<List<Order>> getOrdersByDasherId(@PathVariable String dasherId) {
+        List<Order> orders = orderService.getOrdersByDasherId(dasherId);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/dasher/{dasherId}/active")
+    public ResponseEntity<Order> getActiveOrderByDasherId(@PathVariable String dasherId) {
+        Order order = orderService.getActiveOrderByDasherId(dasherId);
+        return ResponseEntity.ok(order);
     }
 }

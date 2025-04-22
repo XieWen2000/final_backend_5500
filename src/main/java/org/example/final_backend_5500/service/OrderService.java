@@ -16,4 +16,11 @@ public interface OrderService {
     List<Order> getRestaurantActiveOrders(String restaurantId);
     List<Order> getRestaurantCompletedOrders(String restaurantId);
     Order restaurantUpdateOrderStatus(String orderId, OrderStatus status, String restaurantId);
+
+    Order dasherUpdateOrderStatus(String orderId, OrderStatus status, String dasherId);
+    List<Order> getUnassignedOrder();
+    Order assignDasherToOrder(String orderId, String dasherId, String dasherName);
+    List<Order> getOrdersByDasherId(String dasherId);
+
+    Order getActiveOrderByDasherId(String dasherId);
 }

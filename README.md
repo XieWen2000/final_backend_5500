@@ -6,7 +6,7 @@ A full-stack food delivery system designed to provide a seamless experience for 
 1. make sure you have our code *5500-final-frontend* and *final_backend_5500*;
 
 2. modified the environment variable in "resources"-> "application.properties",
-   `MONGODB_URI=mongodb+srv://jiangtianh:MUaxDqTSz3kGqE7G@cluster0.6hhyc70.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+   `MONGODB_URI=<mongodb-connection-string>`
 3. run  `npm run dev`;
 
 4. If there is no browser open automatically, runs the app in the development mode.
@@ -23,10 +23,10 @@ A full-stack food delivery system designed to provide a seamless experience for 
 
 ### Functionality & Requirements Fulfillment
 
-- 📦 **Customer Portal**: SingIn, SignUpBrowse menus, place and track orders
-- 🍜 **Restaurant** : Register as restaurants
-- 🚗 **Dasher**: Check orders, accepted orders
-- ☁️ **Cloud-based Storage**: MongoDB for user and order data
+- 🔒 **Authentication**: SignUp, SignIn, SignOut for all user types
+- 📦 **Customer Portal**: Browse menus, add items to cart, place and track orders
+- 🍜 **Restaurant** : CRUD operations for menu items, view and accept orders
+- 🚗 **Dasher**: Check orders, accepted orders, update order status
 
 ---
 
@@ -34,7 +34,7 @@ A full-stack food delivery system designed to provide a seamless experience for 
 
 - 🧩 **Modular Design**: Separation of concerns between services (frontend, backend, data)
 - 📐 **Object-Oriented Programming**: Core entities like `User`, `Dasher`, `Order` follow SOLID principles
-- 💾 **MongoDB + AWS SQS**: Scalable storage and message queue handling
+- 💾 **MongoDB**: Scalable storage
 - 🔧 **Microservice-Friendly**: Easily extendable to a microservice architecture
 
 ---

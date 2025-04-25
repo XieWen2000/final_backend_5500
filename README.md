@@ -16,7 +16,7 @@ A full-stack food delivery system designed to provide a seamless experience for 
 ## 🛠️ Tech Stack
 
 - **Backend**: Java + Spring Boot
-- **Frontend**: React.js / HTML / CSS
+- **Frontend**: React / Redux / RTK Query / HTML / CSS
 - **Database**: MongoDB
 
 ---

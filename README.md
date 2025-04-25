@@ -25,7 +25,7 @@ A full-stack food delivery system designed to provide a seamless experience for 
 
 - 📦 **Customer Portal**: SingIn, SignUpBrowse menus, place and track orders
 - 🍜 **Restaurant** : Register as restaurants
-- 🚗 **Dasher **: Check orders, accepted orders
+- 🚗 **Dasher**: Check orders, accepted orders
 - ☁️ **Cloud-based Storage**: MongoDB for user and order data
 
 ---
